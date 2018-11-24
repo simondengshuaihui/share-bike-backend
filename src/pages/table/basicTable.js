@@ -70,7 +70,8 @@ export default class BasicTable extends React.Component {
       .ajax({
         url: "/table/list",
         data: {
-          isShowLoading: true
+          isShowLoading: true,
+          page:this.param.page
         }
       })
       .then(res => {
@@ -90,7 +91,7 @@ export default class BasicTable extends React.Component {
       });
   }
   onSelectChange=(selectedRowKeys,selectedRows)=>{
-    // console.log('selectedRowKeys changed: ', selectedRows);
+    console.log('selectedRowKeys changed: ', selectedRows);
     this.setState({ selectedRowKeys,selectedRows });
   }
   render() {

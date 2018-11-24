@@ -1,3 +1,7 @@
+import React from 'react';
+import { Select } from 'antd'
+const Option = Select.Option;
+
 export default {
     formateDate(time){
         if(!time)return '';
@@ -15,5 +19,30 @@ export default {
             showTotal:()=>`共${data.result.total_count}条`,
             showQuickJumper:true
         }
-    }
+    },
+    getOptionList(data){
+        if(!data){
+            return []
+        }
+        let option=[]
+        data.map((item)=>{
+            option.push(<Option value={item.id} key={item.id} >{item.name}</Option>)
+        })
+        return option
+    },
+    updateSelectedItem(selectedRowKeys, selectedRows, selectedIds) {
+        if (selectedIds) {
+            this.setState({
+                selectedRowKeys,
+                selectedIds: selectedIds,
+                selectedItem: selectedRows
+            })
+        } else {
+            this.setState({
+                selectedRowKeys,
+                selectedItem: selectedRows
+            })
+        }
+    },
+
 }

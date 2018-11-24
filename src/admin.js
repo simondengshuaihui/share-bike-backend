@@ -18,6 +18,14 @@ import Login from './pages/form/login'
 import Register from './pages/form/register'
 import BasicTable from './pages/table/basicTable'
 import HeightTable from './pages/table/heighTbale'
+import City from './pages/city/index'
+import Order from './pages/order/index'
+import User from './pages/user'
+import BikeMap from './pages/bikeMap'
+import Bar from './pages/echart/bar'
+import Pie from './pages/echart/pie'
+import Line from './pages/echart/line'
+import Rich from './pages/rich'
 
 const NoMatch = () => <div>没有匹配的网页</div>;
 
@@ -48,6 +56,14 @@ export default class Admin extends React.Component {
               <Route path="/admin/form/reg" component={Register} />
               <Route path="/admin/table/basic" component={BasicTable} />
               <Route path="/admin/table/high" component={HeightTable} />
+              <Route path="/admin/city" component={City} />
+              <Route path="/admin/order" component={Order} />
+              <Route path="/admin/user" component={User} />
+              <Route path="/admin/bikeMap" component={BikeMap} />
+              <Route path="/admin/charts/bar" component={Bar} />
+              <Route path="/admin/charts/pie" component={Pie} />
+              <Route path="/admin/charts/line" component={Line} />
+              <Route path="/admin/rich" component={Rich} />
               <Route component={NoMatch} />
             </Switch>
           </Row>
