@@ -5,7 +5,7 @@ import Footer from "./components/footer/footer";
 import Navlist from "./components/navlist/navlist";
 import Home from "./pages/home";
 import "./style/common.less";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch ,Redirect} from "react-router-dom";
 import Buttons from "./pages/ui/buttons";
 import Modals from "./pages/ui/modals";
 import Loadings from "./pages/ui/loading";
@@ -26,6 +26,7 @@ import Bar from './pages/echart/bar'
 import Pie from './pages/echart/pie'
 import Line from './pages/echart/line'
 import Rich from './pages/rich'
+import Permission from './pages/permission'
 
 const NoMatch = () => <div>没有匹配的网页</div>;
 
@@ -64,6 +65,8 @@ export default class Admin extends React.Component {
               <Route path="/admin/charts/pie" component={Pie} />
               <Route path="/admin/charts/line" component={Line} />
               <Route path="/admin/rich" component={Rich} />
+              <Route path="/admin/permission" component={Permission} />
+              <Redirect to="/admin/home"></Redirect>
               <Route component={NoMatch} />
             </Switch>
           </Row>
@@ -73,3 +76,4 @@ export default class Admin extends React.Component {
     );
   }
 }
+

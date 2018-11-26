@@ -3,8 +3,9 @@ import { Col, Row } from "antd";
 import "./header.less";
 import Util from "../../util/util";
 import axios from "../../axios/axios";
+import {connect} from 'react-redux'
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   componentWillMount() {
     this.setState({
       userName: "Simon"
@@ -70,3 +71,8 @@ export default class Header extends React.Component {
     );
   }
 }
+
+const mapStateToProps=state=>{
+  return {menuName:state.menuTitle}
+}
+export default connect(mapStateToProps)(Header)
