@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Admin from "./admin";
 import Common from "./common";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
 
 const Login = () => {
   return <div>login登录页</div>;
@@ -19,6 +19,7 @@ class App extends Component {
           <Route path="/admin" component={Admin} />
           <Route path="/common" component={Common} />
           <Route path="/detail" component={Detail} />
+          <Redirect to="/admin"></Redirect>
         </Switch>
       </div>
     );
