@@ -48,7 +48,7 @@ export default class User extends React.Component {
         }
       })
       .then(res => {
-        let _this = this;
+        // let _this = this;
         this.setState({
           list: res.result.list.map((item, index) => {
             item.key = index;
