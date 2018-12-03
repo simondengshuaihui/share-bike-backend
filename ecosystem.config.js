@@ -24,7 +24,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@gitee.com:simonhui/beckend_sharebick.git',
       path : '/www/sharebike/production',
-      'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'git pull origin master && cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
