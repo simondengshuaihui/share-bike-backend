@@ -423,7 +423,7 @@ class RoleAuthForm extends React.Component {
     };
 
     const detail_info = this.props.detailInfo;
-    const menuInfo = this.props.menuInfo;
+    // const menuInfo = this.props.menuInfo;
     return (
       <Form layout="horizontal">
         <FormItem label="角色名称" {...formItemLayout}>

@@ -170,7 +170,7 @@ class FormRegister extends React.Component {
                   onChange={this.handleChange}
                 >
                   {this.state.userImg ? (
-                    <img src={this.state.userImg} />
+                    <img src={this.state.userImg}  alt=""/>
                   ) : (
                     <Icon type="plus" />
                   )}
