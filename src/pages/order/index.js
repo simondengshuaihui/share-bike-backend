@@ -1,228 +1,224 @@
-import React from "react";
-import {
-  Card,
-  Button,
-  Table,
-  Form,
-  Modal,
-  
-  message
-} from "antd";
-import axios from "../../axios/axios";
-import Utils from "../../util/util";
-import BaseForm from "../../components/baseForm";
-const FormItem = Form.Item;
+import React from 'react'
+import { Card, Button, Table, Form, Modal, message } from 'antd'
+import axios from '../../axios/axios'
+import Utils from '../../util/util'
+import BaseForm from '../../components/baseForm'
+const FormItem = Form.Item
 // const Option = Select.Option;
 export default class Order extends React.Component {
   state = {
     orderInfo: {},
-    orderConfirmVisble: false
-  };
+    orderConfirmVisble: false,
+  }
   params = {
-    page: 1
-  };
+    page: 1,
+  }
   componentDidMount() {
-    this.requestList();
+    this.requestList()
   }
   // 条件过滤，提交到参数请求数据
-  handleFilter = params => {
-    this.params = params;
+  handleFilter = (params) => {
+    this.params = params
     console.log(params)
-    this.requestList();
-  };
+    this.requestList()
+  }
 
   //   单行点击
   onRowClick = (record, index) => {
-    let selectKey = [index];
+    let selectKey = [index]
     this.setState({
       selectedRowKeys: selectKey,
-      selectedItem: record
-    });
-  };
+      selectedItem: record,
+    })
+  }
   // 订单结束确认，请求订单车辆详情
   handleConfirm = () => {
-    let item = this.state.selectedItem;
+    let item = this.state.selectedItem
     if (!item) {
       Modal.info({
-        title: "信息",
-        content: "请选择一条订单信息结束"
-      });
-      return;
+        title: '信息',
+        content: '请选择一条订单信息结束',
+      })
+      return
     }
     axios
       .ajax({
-        url: "/order/ebike_info",
+        url: '/order/ebike_info',
         data: {
           params: {
-            orderId: item.id
-          }
-        }
+            orderId: item.id,
+          },
+        },
       })
-      .then(res => {
+      .then((res) => {
         if (res.code === 0) {
           this.setState({
             orderInfo: res.result,
-            orderConfirmVisble: true
-          });
-        }
-      });
-  };
-  //   确认结束订单
-  handleFineshOrder = () => {
-    let item = this.state.selectedItem;
-    axios
-      .ajax({
-        url: "/order/finish_order",
-        data: {
-          params: {
-            orderId: item.id
-          }
+            orderConfirmVisble: true,
+          })
         }
       })
-      .then(res => {
+  }
+  //   确认结束订单
+  handleFineshOrder = () => {
+    let item = this.state.selectedItem
+    axios
+      .ajax({
+        url: '/order/finish_order',
+        data: {
+          params: {
+            orderId: item.id,
+          },
+        },
+      })
+      .then((res) => {
         if (res.code === 0) {
-          message.success("订单结束成功");
+          message.success('订单结束成功')
           this.setState({
-            orderConfirmVisble: false
-          });
-          this.requestList();
+            orderConfirmVisble: false,
+          })
+          this.requestList()
         }
-      });
-  };
+      })
+  }
   // 打开订单详情页
   openOrderDetail = () => {
-    let item = this.state.selectedItem;
+    let item = this.state.selectedItem
     if (!item) {
       Modal.info({
-        title: "信息",
-        content: "请选择一条订单"
-      });
-      return;
+        title: '信息',
+        content: '请选择一条订单',
+      })
+      return
     }
-    window.open(`/common/order/detail/${item.id}`, "_blank");
-  };
+    window.open(`/common/order/detail/${item.id}`, '_blank')
+  }
 
   formList = [
     {
-      type: "SELECT",
-      label: "城市",
-      field: "city",
-      placeholder: "全部",
-      initialValue: "1",
+      type: 'SELECT',
+      label: '城市',
+      field: 'city',
+      placeholder: '全部',
+      initialValue: '1',
       width: 80,
       list: [
-        { id: "0", name: "全部" },
-        { id: "1", name: "北京" },
-        { id: "2", name: "天津" },
-        { id: "3", name: "上海" }
-      ]
+        { id: '0', name: '全部' },
+        { id: '1', name: '北京' },
+        { id: '2', name: '天津' },
+        { id: '3', name: '上海' },
+      ],
     },
     {
-      type: "时间查询"
+      type: '时间查询',
     },
     {
-      type: "SELECT",
-      label: "订单状态",
-      field: "order_status",
-      placeholder: "全部",
-      initialValue: "1",
+      type: 'SELECT',
+      label: '订单状态',
+      field: 'order_status',
+      placeholder: '全部',
+      initialValue: '1',
       width: 80,
       list: [
-        { id: "0", name: "全部" },
-        { id: "1", name: "进行中" },
-        { id: "2", name: "结束行程" }
-      ]
-    }
-  ];
+        { id: '0', name: '全部' },
+        { id: '1', name: '进行中' },
+        { id: '2', name: '结束行程' },
+      ],
+    },
+  ]
   requestList = () => {
-    let _this = this;
+    let _this = this
     axios
       .ajax({
-        url: "/order/list",
+        url: '/order/list',
         data: {
-          params: this.params
-        }
+          params: this.params,
+        },
       })
-      .then(res => {
+      .then((res) => {
         let list = res.result.item_list.map((item, index) => {
-          item.key = index;
-          return item;
-        });
+          item.key = index
+          return item
+        })
         this.setState({
           list,
-          pagination: Utils.pagination(res, current => {
-            _this.params.page = current;
-            _this.requestList();
-          })
-        });
-      });
-  };
+          pagination: Utils.pagination(res, (current) => {
+            _this.params.page = current
+            _this.requestList()
+          }),
+        })
+      })
+  }
   render() {
     const columns = [
       {
-        title: "订单编号",
-        dataIndex: "order_sn"
+        title: '订单编号',
+        dataIndex: 'order_sn',
       },
       {
-        title: "车辆编号",
-        dataIndex: "bike_sn"
+        title: '车辆编号',
+        dataIndex: 'bike_sn',
       },
       {
-        title: "用户名",
-        dataIndex: "user_name"
+        title: '用户名',
+        dataIndex: 'user_name',
       },
       {
-        title: "手机号",
-        dataIndex: "mobile"
+        title: '手机号',
+        dataIndex: 'mobile',
       },
       {
-        title: "里程",
-        dataIndex: "distance",
+        title: '里程',
+        dataIndex: 'distance',
         render(distance) {
-          return distance / 1000 + "Km";
-        }
+          return distance / 1000 + 'Km'
+        },
       },
       {
-        title: "行驶时长",
-        dataIndex: "total_time"
+        title: '行驶时长',
+        dataIndex: 'total_time',
       },
       {
-        title: "状态",
-        dataIndex: "status"
+        title: '状态',
+        dataIndex: 'status',
       },
       {
-        title: "开始时间",
-        dataIndex: "start_time"
+        title: '开始时间',
+        dataIndex: 'start_time',
       },
       {
-        title: "结束时间",
-        dataIndex: "end_time"
+        title: '结束时间',
+        dataIndex: 'end_time',
       },
       {
-        title: "订单金额",
-        dataIndex: "total_fee"
+        title: '订单金额',
+        dataIndex: 'total_fee',
       },
       {
-        title: "实付金额",
-        dataIndex: "user_pay"
-      }
-    ];
+        title: '实付金额',
+        dataIndex: 'user_pay',
+      },
+    ]
     const formItemLayout = {
       labelCol: { span: 5 },
-      wrapperCol: { span: 19 }
-    };
-    const selectedRowKeys = this.state.selectedRowKeys;
+      wrapperCol: { span: 19 },
+    }
+    const selectedRowKeys = this.state.selectedRowKeys
     const rowSelection = {
-      type: "radio",
+      type: 'radio',
       selectedRowKeys,
-      onChange:(selectedRowKeys, selectedRows)=>{
-        console.log('selectedRowKeys:',selectedRowKeys,'selectedRows',selectedRows)
-
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          'selectedRowKeys:',
+          selectedRowKeys,
+          'selectedRows',
+          selectedRows
+        )
       },
-      onSelect:(record, selected, selectedRows, nativeEvent)=>{
-        console.log('onSelect:',record, selected, selectedRows, nativeEvent)
-      }
-    };
+      onSelect: (record, selected, selectedRows, nativeEvent) => {
+        console.log('onSelect:', record, selected, selectedRows, nativeEvent)
+      },
+    }
     return (
       <div>
         <Card>
@@ -250,10 +246,10 @@ export default class Order extends React.Component {
             onRow={(record, index) => {
               return {
                 onClick: () => {
-                  console.log(record, index);
-                  this.onRowClick(record, index);
-                }
-              };
+                  console.log(record, index)
+                  this.onRowClick(record, index)
+                },
+              }
             }}
           />
         </div>
@@ -261,7 +257,7 @@ export default class Order extends React.Component {
           title="结束订单"
           visible={this.state.orderConfirmVisble}
           onCancel={() => {
-            this.setState({ orderConfirmVisble: false });
+            this.setState({ orderConfirmVisble: false })
           }}
           onOk={this.handleFineshOrder}
           width={600}
@@ -271,7 +267,7 @@ export default class Order extends React.Component {
               {this.state.orderInfo.bike_sn}
             </FormItem>
             <FormItem label="剩余电量" {...formItemLayout}>
-              {this.state.orderInfo.battery + "%"}
+              {this.state.orderInfo.battery + '%'}
             </FormItem>
             <FormItem label="行程开始时间" {...formItemLayout}>
               {this.state.orderInfo.start_time}
@@ -282,6 +278,6 @@ export default class Order extends React.Component {
           </Form>
         </Modal>
       </div>
-    );
+    )
   }
 }
