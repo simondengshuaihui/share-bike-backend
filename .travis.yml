@@ -1,0 +1,23 @@
+language: node_js
+node_js: 
+  - "10"
+
+cache: 
+  yarn: true
+
+install: 
+  - yarn install
+
+script:
+  - yarn build
+
+deploy:
+  local_dir: build/
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: false
+  name: simon
+  email: dengshuaihui@gmail.com
+  on:
+    branch: master
